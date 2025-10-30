@@ -3,6 +3,7 @@ package org.example.entities;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -15,6 +16,7 @@ public class DogTraining {
 
     private String activity;
     private String location;
+    private LocalDate trainingDate;
     private int durationMinutes;
     @Lob
     private String notes;
@@ -26,9 +28,10 @@ public class DogTraining {
 
 
 
-    public DogTraining(String activity, String location, int durationMinutes, String notes) {
+    public DogTraining(String activity, String location, LocalDate traningDate, int durationMinutes, String notes) {
         this.activity = activity;
         this.location = location;
+        this.trainingDate = traningDate;
         this.durationMinutes = durationMinutes;
         this.notes = notes;
     }
@@ -54,6 +57,14 @@ public class DogTraining {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public LocalDate getTrainingDate() {
+        return trainingDate;
+    }
+
+    public void setTrainingDate(LocalDate trainingDate) {
+        this.trainingDate = trainingDate;
     }
 
     public int getDurationMinutes() {
