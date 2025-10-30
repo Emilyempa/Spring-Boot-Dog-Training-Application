@@ -28,10 +28,10 @@ public class DogTraining {
 
 
 
-    public DogTraining(String activity, String location, LocalDate traningDate, int durationMinutes, String notes) {
+    public DogTraining(String activity, String location, LocalDate trainingDate, int durationMinutes, String notes) {
         this.activity = activity;
         this.location = location;
-        this.trainingDate = traningDate;
+        this.trainingDate = trainingDate;
         this.durationMinutes = durationMinutes;
         this.notes = notes;
     }
