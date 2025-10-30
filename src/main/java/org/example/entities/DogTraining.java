@@ -34,13 +34,6 @@ public class DogTraining {
         this.notes = dto.notes();
     }
 
-    public DogTraining(String activity, String location, LocalDate trainingDate, int durationMinutes, String notes) {
-        this.activity = activity;
-        this.location = location;
-        this.trainingDate = trainingDate;
-        this.durationMinutes = durationMinutes;
-        this.notes = notes;
-    }
     public Integer getId() {
         return id;
     }
