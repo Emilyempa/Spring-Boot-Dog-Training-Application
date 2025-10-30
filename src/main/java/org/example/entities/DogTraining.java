@@ -26,7 +26,13 @@ public class DogTraining {
 
     public DogTraining() {}
 
-
+    public DogTraining(org.example.DogTrainingDTO dto) {
+        this.activity = dto.activity();
+        this.location = dto.location();
+        this.trainingDate = dto.trainingDate();
+        this.durationMinutes = dto.durationMinutes();
+        this.notes = dto.notes();
+    }
 
     public DogTraining(String activity, String location, LocalDate trainingDate, int durationMinutes, String notes) {
         this.activity = activity;

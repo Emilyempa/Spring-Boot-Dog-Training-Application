@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("api/dogtraining")
 public class DogTrainingController {
 
     private final DogTrainingRepository repository;
@@ -15,27 +15,23 @@ public class DogTrainingController {
         this.repository = repository;
     }
 
-    // GET /api → welcome message
     @GetMapping
-    public String welcome() {
-        return "Welcome to Dog Training tracker";
+    public List<DogTrainingDTO> getAll() {
+        return repository.findAll().stream()
+                .map(DogTrainingDTO::new)
+                .toList();
     }
 
-    // GET /api/dogtraining → get all sessions
-    @GetMapping("/dogtraining")
-    public List<DogTraining> getAllTrainings() {
-        return repository.findAll();
+    @GetMapping("/{id}")
+    public DogTrainingDTO getById(@PathVariable Integer id) {
+        return repository.findById(id)
+                .map(DogTrainingDTO::new)
+                .orElseThrow();
     }
 
-    // GET /api/dogtraining/{id} → get session by id
-    @GetMapping("/dogtraining/{id}")
-    public DogTraining getTrainingById(@PathVariable Integer id) {
-        return repository.findById(id).orElseThrow();
-    }
-
-    // POST /api/dogtraining → create session
-    @PostMapping("/dogtraining")
-    public DogTraining createTraining(@RequestBody DogTraining training) {
-        return repository.save(training);
+    @PostMapping
+    public DogTrainingDTO create(@RequestBody DogTrainingDTO dto) {
+        DogTraining saved = repository.save(new DogTraining(dto));
+        return new DogTrainingDTO(saved);
     }
 }
