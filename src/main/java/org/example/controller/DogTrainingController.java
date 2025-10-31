@@ -6,9 +6,11 @@ import org.example.DogTrainingDTO;
 import org.example.repository.DogTrainingRepository;
 import org.example.entities.DogTraining;
 import org.example.errorhandling.DogTrainingNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -36,8 +38,12 @@ public class DogTrainingController {
     }
 
     @PostMapping
-    public DogTrainingDTO create(@Valid @RequestBody DogTrainingDTO dto) {
+    public ResponseEntity<DogTrainingDTO> create(@Valid @RequestBody DogTrainingDTO dto) {
         DogTraining saved = repository.save(new DogTraining(dto));
-        return new DogTrainingDTO(saved);
-    }
+        DogTrainingDTO response = new DogTrainingDTO(saved);
+
+        return ResponseEntity
+                .created(URI.create("/api/dogtraining/" + saved.getId())) // gives Location-header
+                .body(response);
+        }
 }
