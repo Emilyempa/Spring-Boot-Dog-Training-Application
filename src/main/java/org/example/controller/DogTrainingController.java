@@ -1,6 +1,8 @@
-package org.example;
+package org.example.controller;
 
 
+import org.example.DogTrainingDTO;
+import org.example.repository.DogTrainingRepository;
 import org.example.entities.DogTraining;
 import org.example.errorhandling.DogTrainingNotFoundException;
 import org.springframework.web.bind.annotation.*;

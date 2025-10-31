@@ -1,4 +1,4 @@
-package org.example;
+package org.example.repository;
 
 import org.example.entities.DogTraining;
 import org.springframework.data.repository.ListCrudRepository;
