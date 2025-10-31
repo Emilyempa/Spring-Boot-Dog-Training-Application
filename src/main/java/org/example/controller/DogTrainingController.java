@@ -1,6 +1,7 @@
 package org.example.controller;
 
 
+import jakarta.validation.Valid;
 import org.example.DogTrainingDTO;
 import org.example.repository.DogTrainingRepository;
 import org.example.entities.DogTraining;
@@ -35,7 +36,7 @@ public class DogTrainingController {
     }
 
     @PostMapping
-    public DogTrainingDTO create(@RequestBody DogTrainingDTO dto) {
+    public DogTrainingDTO create(@Valid @RequestBody DogTrainingDTO dto) {
         DogTraining saved = repository.save(new DogTraining(dto));
         return new DogTrainingDTO(saved);
     }
