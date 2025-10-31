@@ -13,7 +13,6 @@ public class DogTraining {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String activity;
     private String location;
     private LocalDate trainingDate;
