@@ -1,4 +1,4 @@
-package org.example;
+package org.example.errorhandling;
 
 public class DogTrainingNotFoundException extends RuntimeException {
     public DogTrainingNotFoundException(Integer id) {

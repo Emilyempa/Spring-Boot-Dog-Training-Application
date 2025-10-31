@@ -1,7 +1,10 @@
 package org.example;
 
+
 import org.example.entities.DogTraining;
+import org.example.errorhandling.DogTrainingNotFoundException;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class DogTrainingController {
     public DogTrainingDTO getById(@PathVariable Integer id) {
         return repository.findById(id)
                 .map(DogTrainingDTO::new)
-                .orElseThrow();
+                .orElseThrow(() -> new DogTrainingNotFoundException(id));
     }
 
     @PostMapping
