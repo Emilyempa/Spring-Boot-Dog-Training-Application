@@ -21,6 +21,10 @@ public class DogTraining {
     @Lob
     private String notes;
 
+    @ManyToOne
+    @JoinColumn(name = "dog_id")
+    private Dog dog;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -89,4 +93,12 @@ public class DogTraining {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+    public Dog getDog() {
+        return dog;
+    }
+
+    public void setDog(Dog dog) {
+        this.dog = dog;
+    }
+
 }

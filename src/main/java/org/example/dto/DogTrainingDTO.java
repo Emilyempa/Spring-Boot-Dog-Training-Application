@@ -25,6 +25,7 @@ public record DogTrainingDTO(
         int durationMinutes,
 
         String notes,
+        Integer dogId,
         LocalDateTime createdAt
 ) {
     // constructor that builds DTO from entity
@@ -36,6 +37,7 @@ public record DogTrainingDTO(
                 entity.getTrainingDate(),
                 entity.getDurationMinutes(),
                 entity.getNotes(),
+                entity.getDog() != null ? entity.getDog().getId() : null,
                 entity.getCreatedAt()
         );
     }
