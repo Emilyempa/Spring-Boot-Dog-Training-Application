@@ -2,7 +2,7 @@ package org.example.controller;
 
 
 import jakarta.validation.Valid;
-import org.example.DogTrainingDTO;
+import org.example.dto.DogTrainingDTO;
 import org.example.repository.DogTrainingRepository;
 import org.example.entities.DogTraining;
 import org.example.errorhandling.DogTrainingNotFoundException;

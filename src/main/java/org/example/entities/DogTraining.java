@@ -1,6 +1,7 @@
 package org.example.entities;
 
 import jakarta.persistence.*;
+import org.example.dto.DogTrainingDTO;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
@@ -25,7 +26,7 @@ public class DogTraining {
 
     public DogTraining() {}
 
-    public DogTraining(org.example.DogTrainingDTO dto) {
+    public DogTraining(DogTrainingDTO dto) {
         this.activity = dto.activity();
         this.location = dto.location();
         this.trainingDate = dto.trainingDate();
