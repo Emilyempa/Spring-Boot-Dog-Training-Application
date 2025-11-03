@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/dogtraining")
+@RequestMapping("api")
 public class DogTrainingController {
 
     private final DogTrainingRepository repository;
@@ -23,14 +23,14 @@ public class DogTrainingController {
         this.repository = repository;
     }
 
-    @GetMapping
+    @GetMapping("/dogtraining")
     public List<DogTrainingDTO> getAll() {
         return repository.findAll().stream()
                 .map(DogTrainingDTO::new)
                 .toList();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/dogtraining/{id}")
     public DogTrainingDTO getById(@PathVariable Integer id) {
         return repository.findById(id)
                 .map(DogTrainingDTO::new)
@@ -46,4 +46,32 @@ public class DogTrainingController {
                 .created(URI.create("/api/dogtraining/" + saved.getId())) // gives Location-header
                 .body(response);
         }
+    @PutMapping("/dogtraining/{id}")
+    public ResponseEntity<DogTrainingDTO> update(
+            @PathVariable Integer id,
+            @Valid @RequestBody DogTrainingDTO dto) {
+
+        DogTraining existing = repository.findById(id)
+                .orElseThrow(() -> new DogTrainingNotFoundException(id));
+
+        existing.setActivity(dto.activity());
+        existing.setLocation(dto.location());
+        existing.setTrainingDate(dto.trainingDate());
+        existing.setDurationMinutes(dto.durationMinutes());
+        existing.setNotes(dto.notes());
+
+        DogTraining updated = repository.save(existing);
+        DogTrainingDTO response = new DogTrainingDTO(updated);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/dogtraining/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        DogTraining existing = repository.findById(id)
+                .orElseThrow(() -> new DogTrainingNotFoundException(id));
+
+        repository.delete(existing);
+        return ResponseEntity.noContent().build();
+    }
 }
