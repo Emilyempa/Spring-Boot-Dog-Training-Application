@@ -6,11 +6,8 @@ import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-public record DogTrainingDTO(
-        Integer id,
-
+public record DogTrainingRequestDTO(
         @NotBlank(message = "Activity is required")
         String activity,
 
@@ -25,20 +22,8 @@ public record DogTrainingDTO(
         int durationMinutes,
 
         String notes,
-        Integer dogId,
-        LocalDateTime createdAt
+
+        @NotNull(message = "Dog ID is required")
+        Integer dogId
 ) {
-    // constructor that builds DTO from entity
-    public DogTrainingDTO(org.example.entities.DogTraining entity) {
-        this(
-                entity.getId(),
-                entity.getActivity(),
-                entity.getLocation(),
-                entity.getTrainingDate(),
-                entity.getDurationMinutes(),
-                entity.getNotes(),
-                entity.getDog() != null ? entity.getDog().getId() : null,
-                entity.getCreatedAt()
-        );
-    }
 }
