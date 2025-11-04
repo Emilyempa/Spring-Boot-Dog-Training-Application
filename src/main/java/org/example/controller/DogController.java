@@ -3,9 +3,12 @@ package org.example.controller;
 import jakarta.validation.Valid;
 import org.example.dto.DogRequestDTO;
 import org.example.dto.DogResponseDTO;
+import org.example.dto.DogTrainingResponseDTO;
 import org.example.entities.Dog;
+import org.example.entities.DogTraining;
 import org.example.errorhandling.DogNotFoundException;
 import org.example.repository.DogRepository;
+import org.example.repository.DogTrainingRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +20,11 @@ import java.util.List;
 public class DogController {
 
     private final DogRepository repository;
+    private final DogTrainingRepository dogTrainingRepository;
 
-    public DogController(DogRepository repository) {
+    public DogController(DogRepository repository, DogTrainingRepository dogTrainingRepository) {
         this.repository = repository;
+        this.dogTrainingRepository = dogTrainingRepository;
     }
 
     @GetMapping
@@ -34,6 +39,25 @@ public class DogController {
         return repository.findById(id)
                 .map(DogResponseDTO::new)
                 .orElseThrow(() -> new DogNotFoundException(id));
+    }
+
+    @GetMapping("/{id}/dogtraining")
+    public List<DogTrainingResponseDTO> getDogTrainings(
+            @PathVariable Integer id,
+            @RequestParam(required = false) String activity) {
+
+        List<DogTraining> training;
+
+        if (activity != null && !activity.isBlank()) {
+            training = dogTrainingRepository.findByDogIdAndActivity(id, activity);
+        } else {
+            training = dogTrainingRepository.findByDogId(id);
+        }
+
+        return training.stream()
+                .map(DogTrainingResponseDTO::new)
+                .toList();
+
     }
 
     @PostMapping
