@@ -1,7 +1,6 @@
 package org.example.entities;
 
 import jakarta.persistence.*;
-import org.example.dto.DogTrainingResponseDTO;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
