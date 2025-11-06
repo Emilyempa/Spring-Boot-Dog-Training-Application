@@ -8,7 +8,8 @@ public record DogResponseDTO(
         Integer id,
         String name,
         String breed,
-        LocalDate birthdate
+        LocalDate birthdate,
+        String ownerUsername
 ) {
     // Constructorthat converts from Entity to DTO
     public DogResponseDTO(Dog entity) {
@@ -16,7 +17,8 @@ public record DogResponseDTO(
                 entity.getId(),
                 entity.getName(),
                 entity.getBreed(),
-                entity.getBirthdate()
+                entity.getBirthdate(),
+                entity.getOwner() != null ? entity.getOwner().getUsername() : null
         );
     }
 }

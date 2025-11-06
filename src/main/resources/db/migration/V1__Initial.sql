@@ -1,22 +1,9 @@
-CREATE TABLE IF NOT EXISTS dog
-(
-    id        INT AUTO_INCREMENT NOT NULL,
-    name      VARCHAR(255)       NULL,
-    breed     VARCHAR(255)       NULL,
-    birthdate DATE               NULL,
-    CONSTRAINT pk_dog PRIMARY KEY (id)
+CREATE TABLE users (
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       username VARCHAR(50) NOT NULL UNIQUE,
+                       password VARCHAR(255) NOT NULL,
+                       role VARCHAR(20) NOT NULL,
+                       enabled BOOLEAN NOT NULL DEFAULT TRUE
 );
 
-CREATE TABLE IF NOT EXISTS dog_training
-(
-    id               INT AUTO_INCREMENT NOT NULL,
-    activity         VARCHAR(255)       NULL,
-    location         VARCHAR(255)       NULL,
-    training_date    DATE               NULL,
-    duration_minutes INT                NOT NULL,
-    notes            LONGTEXT           NULL,
-    dog_id           INT                NULL,
-    created_at       DATETIME           NULL,
-    CONSTRAINT pk_dogtraining PRIMARY KEY (id),
-    CONSTRAINT FK_DOGTRAINING_ON_DOG FOREIGN KEY (dog_id) REFERENCES dog (id)
-)
+CREATE INDEX idx_username ON users(username);

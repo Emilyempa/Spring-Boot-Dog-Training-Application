@@ -1,9 +1,6 @@
 package org.example.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -15,6 +12,10 @@ public class Dog {
     private String name;
     private String breed;
     private LocalDate birthdate;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
 
 
     public Integer getId() {
@@ -47,5 +48,13 @@ public class Dog {
 
     public void setBirthdate(LocalDate bithdate) {
         this.birthdate = bithdate;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
