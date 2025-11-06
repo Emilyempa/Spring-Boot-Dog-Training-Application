@@ -10,6 +10,7 @@ import org.example.errorhandling.DogNotFoundException;
 import org.example.repository.DogRepository;
 import org.example.repository.DogTrainingRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -28,6 +29,7 @@ public class DogController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public List<DogResponseDTO> getAll() {
         return repository.findAll().stream()
                 .map(DogResponseDTO::new)
