@@ -91,6 +91,8 @@ public class DevDataInitializer implements ApplicationRunner {
 
             log.info("Saved dog Peggy with id={}, owner={}", peggy.getId(), peggy.getOwner().getUsername());
             log.info("Saved dog Rosa with id={}, owner={}", rosa.getId(), rosa.getOwner().getUsername());
+            log.info("Saved dog Charlie with id={}, owner={}", charlie.getId(), charlie.getOwner().getUsername());
+            log.info("Saved dog Luna with id={}, owner={}", luna.getId(), luna.getOwner().getUsername());
 
             // Create training for Peggy (user's dog)
             var training1 = new DogTraining();
