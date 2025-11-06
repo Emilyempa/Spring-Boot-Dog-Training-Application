@@ -64,13 +64,13 @@ public class DevDataInitializer implements ApplicationRunner {
 
             // Create dogs
             var peggy = new Dog();
-            peggy.setName("Bella");
-            peggy.setBreed("Golden Retriever");
+            peggy.setName("Peggy");
+            peggy.setBreed("Bichon Frisé");
             peggy.setBirthdate(LocalDate.of(2024, 9, 14));
             peggy.setOwner(user);
 
             var rosa = new Dog();
-            rosa.setName("Max");
+            rosa.setName("Rosa");
             rosa.setBreed("Border Collie");
             rosa.setBirthdate(LocalDate.of(2019, 7, 22));
             rosa.setOwner(user);
@@ -89,8 +89,8 @@ public class DevDataInitializer implements ApplicationRunner {
 
             dogRepository.saveAll(List.of(peggy, rosa, charlie, luna));
 
-            log.info("Saved dog Bella with id={}, owner={}", peggy.getId(), peggy.getOwner().getUsername());
-            log.info("Saved dog Max with id={}, owner={}", rosa.getId(), rosa.getOwner().getUsername());
+            log.info("Saved dog Peggy with id={}, owner={}", peggy.getId(), peggy.getOwner().getUsername());
+            log.info("Saved dog Rosa with id={}, owner={}", rosa.getId(), rosa.getOwner().getUsername());
 
             // Create training for Peggy (user's dog)
             var training1 = new DogTraining();
@@ -98,7 +98,7 @@ public class DevDataInitializer implements ApplicationRunner {
             training1.setLocation("Hundparken");
             training1.setTrainingDate(LocalDate.now().minusDays(7));
             training1.setDurationMinutes(45);
-            training1.setNotes("Bella gjorde stora framsteg med 'sitt' och 'ligg'");
+            training1.setNotes("Gjorde stora framsteg med 'sitt' och 'ligg'");
             training1.setDog(peggy);
 
             var training2 = new DogTraining();
@@ -157,7 +157,7 @@ public class DevDataInitializer implements ApplicationRunner {
             training8.setLocation("Träningsplats");
             training8.setTrainingDate(LocalDate.now().minusDays(6));
             training8.setDurationMinutes(50);
-            training8.setNotes("Hittade gömda godis på 2 minuter");
+            training8.setNotes("Hittade gömt godis på 2 minuter");
             training8.setDog(luna);
 
             var training9 = new DogTraining();
