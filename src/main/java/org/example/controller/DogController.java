@@ -27,16 +27,20 @@ public class DogController {
         this.dogTrainingService = dogTrainingService;
     }
 
+    // Returns a list of all dogs accessible to the authenticated user
+    // Admins see all dogs; users see only their own
     @GetMapping
     public List<DogResponseDTO> getDogs(Authentication auth) {
         return dogService.getAllDogs(auth);
     }
 
+    // Returns details of a specific dog by its ID
     @GetMapping("/{id}")
     public DogResponseDTO getById(@PathVariable Integer id, Authentication auth) {
         return dogService.getDogById(id, auth);
     }
 
+    // Creates a new dog (accessible to users with USER or ADMIN roles)
     @PostMapping
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<DogResponseDTO> create(@Valid @RequestBody DogRequestDTO dto, Authentication auth) {
@@ -44,11 +48,13 @@ public class DogController {
         return ResponseEntity.created(URI.create("/api/dogs/" + response.id())).body(response);
     }
 
+    // Updates an existing dog entry by its ID
     @PutMapping("/{id}")
     public DogResponseDTO update(@PathVariable Integer id, @Valid @RequestBody DogRequestDTO dto, Authentication auth) {
         return dogService.updateDog(id, dto, auth);
     }
 
+    // Deletes a dog by its ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id, Authentication auth) {
         dogService.deleteDog(id, auth);
