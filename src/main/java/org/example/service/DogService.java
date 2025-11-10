@@ -94,11 +94,6 @@ public class DogService {
         dogRepository.delete(dog);
     }
 
-    // Get all trainings for a specific dog
-    public List<DogTrainingResponseDTO> getTrainingsForDog(Integer dogId, Authentication auth) {
-        return dogTrainingService.getTrainingsByDogId(dogId, auth);
-    }
-
     // Add new training for a specific dog
     public DogTrainingResponseDTO addTrainingForDog(Integer dogId, DogTrainingRequestDTO dto, Authentication auth) {
         return dogTrainingService.createTrainingForDog(dogId, dto, auth);
