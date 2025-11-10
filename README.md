@@ -1,36 +1,35 @@
-## 🧪 How to Work on the Exercises
+## DogController Endpoints (`/api/dogs`)
 
-Each exercise is described in a GitHub Issue. Follow these steps to complete an exercise and submit your solution:
+| Method | Endpoint                          | Description |
+|--------|-----------------------------------|-------------|
+| GET    | `/api/dogs`                       | Get all dogs accessible to the authenticated user |
+| GET    | `/api/dogs/{id}`                  | Get a specific dog by ID |
+| POST   | `/api/dogs`                       | Create a new dog (requires USER or ADMIN role) |
+| PUT    | `/api/dogs/{id}`                  | Update an existing dog by ID |
+| DELETE | `/api/dogs/{id}`                  | Delete a dog by ID |
+| GET    | `/api/dogs/{dogId}/trainings`     | Get all trainings for a specific dog, optionally filter by activity |
+| POST   | `/api/dogs/{dogId}/trainings`     | Add a new training for a specific dog (requires USER or ADMIN role) |
 
-### 📥 1. Clone or Fork the Repository
-```bash
-git clone https://github.com/fungover/exercise2025.git
-```
-Or fork the repository via GitHub and clone your fork.
+---
 
-### 🌱 2. Create a Branch
-Create a new branch named using the format: your-github-username/exerciseNumber
+## DogTrainingController Endpoints (`/api/dogtraining`)
 
-Example for user githubuser working on Exercise 1:
+| Method | Endpoint                          | Description |
+|--------|-----------------------------------|-------------|
+| GET    | `/api/dogtraining`                | Get all dog training sessions |
+| GET    | `/api/dogtraining/{id}`           | Get a specific training session by ID |
+| POST   | `/api/dogtraining`                | Create a new training session (requires USER or ADMIN role) |
+| DELETE | `/api/dogtraining/{id}`           | Delete a training session by ID |
 
-```bash
-git checkout -b githubuser/exercise1
-```
+---
 
-### 🛠️ 3. Implement Your Solution
-Follow the instructions in the corresponding issue. If anything is unclear, ask questions by commenting directly on the issue.
+##  Authorization & Access Control
 
-### 🚀 4. Push Your Branch
-```bash
-git push origin githubuser/exercise1
-```
-
-### 📬 5. Create a Pull Request
-Open a Pull Request (PR) from your branch.
-
-Link the PR to the issue you're solving.
-
-Include a clear description of your solution.
-
-### 💬 6. Feedback and Iteration
-Reviewers may leave comments or suggestions. Update your branch and push changes until the PR is approved.
+- **All endpoints require authentication.
+- ** Unauthenticated users will only see the login page or an error response.
+- **ADMIN** users can access all dogs and all training sessions.
+- **USER** users can only access dogs and trainings that they own.
+- Endpoints requiring elevated roles (USER or ADMIN):
+    - `POST /api/dogs`
+    - `POST /api/dogs/{dogId}/trainings`
+    - `POST /api/dogtraining`
