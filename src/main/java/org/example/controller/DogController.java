@@ -55,10 +55,20 @@ public class DogController {
         return ResponseEntity.noContent().build();
     }
 
-    // Get all trainings for a specific dog
+    // Get all trainings for a specific dog or query for a specific activity
     @GetMapping("/{dogId}/trainings")
-    public List<DogTrainingResponseDTO> getTrainingsForDog(@PathVariable Integer dogId, Authentication auth) {
-        return dogService.getTrainingsForDog(dogId, auth);
+    public List<DogTrainingResponseDTO> getTrainingsForDog(
+            @PathVariable Integer dogId,
+            @RequestParam(required = false) String activity,
+            Authentication auth) {
+
+        if (activity != null) {
+            // Filter by activity if a parameter is present
+            return dogTrainingService.getTrainingsByDogIdAndActivity(dogId, activity, auth);
+        }
+
+        // Otherwise get all trainings for this dog
+        return dogTrainingService.getTrainingsByDogId(dogId, auth);
     }
 
     // Add a new training for a specific dog

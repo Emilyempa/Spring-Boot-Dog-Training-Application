@@ -98,6 +98,22 @@ public class DogTrainingService {
                 .toList();
     }
 
+    // Get all trainings for a specific dog, optionally filtered by activity
+    public List<DogTrainingResponseDTO> getTrainingsByDogIdAndActivity(Integer dogId, String activity, Authentication auth) {
+        User currentUser = userRepository.findByUsername(auth.getName()).orElseThrow();
+        Dog dog = dogRepository.findById(dogId).orElseThrow(() -> new DogNotFoundException(dogId));
+
+        // Only allow if admin or dog owner
+        if (!currentUser.getRole().equals("ROLE_ADMIN") && !dog.getOwner().getId().equals(currentUser.getId())) {
+            throw new IllegalArgumentException("You cannot view trainings for a dog you do not own.");
+        }
+
+        return trainingRepository.findByDogIdAndActivity(dogId, activity)
+                .stream()
+                .map(DogTrainingResponseDTO::new)
+                .toList();
+    }
+
     // Create new training for a specific dog
     public DogTrainingResponseDTO createTrainingForDog(Integer dogId, DogTrainingRequestDTO dto, Authentication auth) {
         User currentUser = userRepository.findByUsername(auth.getName()).orElseThrow();
