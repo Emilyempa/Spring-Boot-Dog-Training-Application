@@ -55,7 +55,7 @@ public class DogTrainingService {
         Dog dog = dogRepository.findById(dto.dogId())
                 .orElseThrow(() -> new DogNotFoundException(dto.dogId()));
 
-        // checks if dog has specifik owner (if not admin)
+        // checks if dog has specific owner (if not admin)
         if (!currentUser.getRole().equals("ROLE_ADMIN") && !dog.getOwner().getId().equals(currentUser.getId())) {
             throw new IllegalArgumentException("You cannot add training for a dog you do not own.");
         }
