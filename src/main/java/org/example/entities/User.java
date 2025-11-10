@@ -32,7 +32,6 @@ public class User implements UserDetails {
         this.enabled = true;
     }
 
-    // Getters och setters
     public Integer getId() {
         return id;
     }
