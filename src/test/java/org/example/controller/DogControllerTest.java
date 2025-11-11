@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import org.example.dto.DogResponseDTO;
-import org.example.dto.DogTrainingResponseDTO;
 import org.example.service.DogService;
 import org.example.service.DogTrainingService;
 import org.junit.jupiter.api.Test;
@@ -13,14 +12,16 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+
 
 @WebMvcTest(DogController.class)
 class DogControllerRoleBasedTest {
@@ -48,24 +49,6 @@ class DogControllerRoleBasedTest {
         mockDog.setOwner(mockUser);
 
         return new DogResponseDTO(mockDog);
-    }
-
-    private DogTrainingResponseDTO createMockTraining(Integer id, String activity, Integer dogId) {
-        // Create a mock Dogtraining entity
-        org.example.entities.DogTraining mockTraining = new org.example.entities.DogTraining();
-        mockTraining.setId(id);
-        mockTraining.setActivity(activity);
-        mockTraining.setLocation("Park");
-        mockTraining.setTrainingDate(LocalDate.now());
-        mockTraining.setDurationMinutes(30);
-        mockTraining.setNotes("Good training");
-        mockTraining.setCreatedAt(LocalDateTime.now());
-
-        org.example.entities.Dog mockDog = new org.example.entities.Dog();
-        mockDog.setId(dogId);
-        mockTraining.setDog(mockDog);
-
-        return new DogTrainingResponseDTO(mockTraining);
     }
 
     // TEST GET api/dogs
@@ -140,5 +123,55 @@ class DogControllerRoleBasedTest {
                 .andExpect(status().isUnauthorized());
     }
 
-    // TEST GET api/dogs/{id}
+    // TEST POST api/dogs
+
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void createDog_shouldReturnCreatedDog() throws Exception {
+        DogResponseDTO createdDog = createMockDog(10, "Rocky", "Beagle", 1);
+        when(dogService.createDog(any(), any())).thenReturn(createdDog);
+
+        String jsonBody = """
+        {
+          "name": "Rocky",
+          "breed": "Beagle",
+          "birthdate": "2020-01-01"
+        }
+        """;
+
+        mockMvc.perform(post("/api/dogs")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonBody))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", "/api/dogs/10"))
+                .andExpect(jsonPath("$.name").value("Rocky"))
+                .andExpect(jsonPath("$.breed").value("Beagle"));
+    }
+
+    // TEST PUT api/dogs/{id}
+
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void updateDog_shouldReturnUpdatedDog() throws Exception {
+        DogResponseDTO updatedDog = createMockDog(1, "Rocky", "Cocker Spaniel", 1);
+
+        when(dogService.updateDog(any(), any(), any())).thenReturn(updatedDog);
+
+        String jsonBody = """
+    {
+      "name": "Rocky",
+      "breed": "Cocker Spaniel",
+      "birthdate": "2020-01-01"
+    }
+    """;
+
+        mockMvc.perform(put("/api/dogs/1")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Rocky"))
+                .andExpect(jsonPath("$.breed").value("Cocker Spaniel"));
+    }
 }
