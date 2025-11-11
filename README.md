@@ -1,19 +1,16 @@
 # Dog Training Application
 
 ## Description
-This is a dog training application that allows users to create and manage their dogs and their training sessions.
+This is a RESTful dog training application that allows users to create and manage their dogs and their training sessions.
 
-RESTful web application using:
+**Tech stack:**
+- Spring Boot 3.5+
+- Java 25
+- Spring Data JPA (MySQL 9+)
+- Spring Security
+- Docker Compose
+- Flyway for migrations
 
-Spring Boot 3.5+
-
-Java 25
-
-Spring Data JPA for MySQL 9+ access
-
-Docker Compose for reproducible database setup
-
-Spring Security for access control
 
 
 ### Root URL: localhost:8080
@@ -43,7 +40,7 @@ Spring Security for access control
 
 ---
 
-##  Authorization & Access Control
+## Authorization & Access Control
 
 - All endpoints require authentication.
 - Unauthenticated users will only see the login page or an error response.
@@ -61,3 +58,40 @@ Security access control (authenticated vs unauthenticated)
 
 Run test with `mvn test`
 
+
+## Setup
+
+- Prerequisites:
+  - Java 25 (JDK) installed and on PATH
+  - Maven 3.9+ (comes with many IDEs, or install separately)
+  - Docker Desktop with Docker Compose v2
+  - Git
+
+- Quick start (recommended):
+  1) Start the MySQL database with Docker Compose
+     - Command: `docker compose up -d`
+     - This will start a MySQL 9+ container with database dog_training_db
+  2) Run the application
+     - Command: `mvn spring-boot:run`
+     - App starts on `http://localhost:8080`
+  3) Verify the app is up
+     - Open `http://localhost:8080` or call an API endpoint (requires login)
+
+- Alternative (use your own MySQL):
+  - Ensure a MySQL server is running and reachable on `localhost:3306` (or update the URL)
+  - Create database/schema: `dog_training_db`
+  - Set credentials to match your server in `src/main/resources/application.properties` or via environment variables
+  - On app start, Flyway will automatically create/update tables
+
+- Notes:
+  - Default DB credentials are configured in application.properties
+  - Flyway automatically creates and updates tables on startup.
+ 
+- Build a runnable JAR:
+  - `mvn clean package`
+  - Run: `java -jar target/exercise2025-*.jar`
+
+## How the database is managed
+
+- The project uses Flyway migrations under `resources/db/migration`
+- Migrations are applied automatically on startup (`spring.flyway.baseline-on-migrate=true`)
