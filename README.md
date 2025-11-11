@@ -1,3 +1,23 @@
+# Dog Training Application
+
+## Description
+This is a dog training application that allows users to create and manage their dogs and their training sessions.
+
+RESTful web application using:
+
+Spring Boot 3.5+
+
+Java 25
+
+Spring Data JPA for MySQL 9+ access
+
+Docker Compose for reproducible database setup
+
+Spring Security for access control
+
+
+### Root URL: localhost:8080
+
 ## DogController Endpoints (`/api/dogs`)
 
 | Method | Endpoint                          | Description |
@@ -25,11 +45,19 @@
 
 ##  Authorization & Access Control
 
-- **All endpoints require authentication.
-- ** Unauthenticated users will only see the login page or an error response.
+- All endpoints require authentication.
+- Unauthenticated users will only see the login page or an error response.
 - **ADMIN** users can access all dogs and all training sessions.
 - **USER** users can only access dogs and trainings that they own.
 - Endpoints requiring elevated roles (USER or ADMIN):
     - `POST /api/dogs`
     - `POST /api/dogs/{dogId}/trainings`
     - `POST /api/dogtraining`
+
+## TESTS
+Testing of:
+REST controller endpoints
+Security access control (authenticated vs unauthenticated)
+
+Run test with `mvn test`
+
