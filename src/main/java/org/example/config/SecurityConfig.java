@@ -18,16 +18,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Turn of CSRF under development
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/error").permitAll() // login-page
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // admin-only endpoints
                         .anyRequest().authenticated() // everything else needs login
                 )
                 .formLogin(form -> form
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
+                        .defaultSuccessUrl("/api/dogs", true)
+                        .permitAll()//
                 );
 
         return http.build();
