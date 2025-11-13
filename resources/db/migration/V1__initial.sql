@@ -16,7 +16,7 @@ CREATE TABLE dog_training
     training_date    date               NOT NULL,
     duration_minutes INT                NOT NULL,
     notes            TEXT               NULL,
-    dog_id           INT                NULL,
+    dog_id           INT                NOT NULL,
     created_at       datetime           NOT NULL,
     CONSTRAINT pk_dogtraining PRIMARY KEY (id)
 );
