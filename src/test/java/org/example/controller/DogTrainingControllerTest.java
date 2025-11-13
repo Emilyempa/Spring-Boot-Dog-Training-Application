@@ -56,7 +56,7 @@ class DogTrainingControllerRoleBasedTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void detAllTranings_shouldReturnAllforAdmin() throws Exception {
+    void getAllTrainings_shouldReturnAllForAdmin() throws Exception {
         List<DogTrainingResponseDTO> allTrainings = Arrays.asList(
                 createMockTraining(1, "Agility", 1),
                 createMockTraining(2, "Obedience", 2)
